@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@function getVw($px) {
+  $result: calc($px / (375 / 100)) ;
+  @return $result * 1vw;
+}
+
+span img {
+  display: block;
+}
+
+:root {
+  // font-size: calc(1vw + 1vh + .5vmin);
+}
+
+body {
+  // font-size: 1rem/1.6 
+}

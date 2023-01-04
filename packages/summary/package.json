@@ -1,0 +1,30 @@
+{
+  "name": "123",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "prebuild:test": "node scripts/compress.js",
+    "build:test": "vite build --mode test",
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vitejs/plugin-legacy": "^1.8.0",
+    "js-cookie": "^3.0.1",
+    "swiper": "^8.3.2",
+    "vite-plugin-imagemin": "^0.6.1",
+    "vue": "^3.2.25",
+    "xstate": "^4.33.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.0",
+    "sass": "^1.49.11",
+    "sass-loader": "^12.6.0",
+    "unplugin-icons": "^0.14.1",
+    "unplugin-vue-components": "^0.18.5",
+    "vite": "^2.9.0",
+    "vitest": "^0.24.1"
+  }
+}

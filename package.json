@@ -1,0 +1,26 @@
+{
+  "name": "ada",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "template": "node ./script/template.js",
+    "image": "node ./script/compress-image.js",
+    "command": "modern command",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init-tem": "ptm-init rush tem2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^10.4.4",
+    "fs-extra": "^10.1.0",
+    "npm-run-all": "^4.1.5",
+    "tailwindcss": "^3.0.23",
+    "vite-plugin-image-presets": "^0.3.2"
+  },
+  "devDependencies": {
+    "vite-plugin-imagemin": "^0.6.1"
+  }
+}
