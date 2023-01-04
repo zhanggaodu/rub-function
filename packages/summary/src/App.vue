@@ -76,19 +76,19 @@
 
 <script setup>
 import { nextTick, ref } from 'vue';
-import Header from './Header.vue'
-import Tabs from './Tabs.vue'
-import PictureList from './PictureList.vue';
-import Star from './Star.vue'
-import Swiper from './Swiper.vue';
-import Reward from './Reward.vue';
-import Css from './Css.vue';
-import ChangeTheme from './ChangeTheme.vue';
-import Calender from './Calender.vue';
-import Raf from './Raf.vue';
-import Xstate from './Xstate.vue';
+import Header from './components/Header.vue'
+import Tabs from './components/Tabs.vue'
+import PictureList from './components/PictureList.vue';
+import Star from './components/Star.vue'
+import Swiper from './components/Swiper.vue';
+import Reward from './components/Reward.vue';
+import Css from './components/Css.vue';
+import ChangeTheme from './components/ChangeTheme.vue';
+import Calender from './components/Calender.vue';
+import Raf from './components/Raf.vue';
+import Xstate from './components/Xstate.vue';
 import Water from './Water.vue';
-import BoxShadow from './BoxShadow.vue';
+import BoxShadow from './components/BoxShadow.vue';
 import Deep from './components/deep.vue';
 
 window.addEventListener('resize', (event) => {
