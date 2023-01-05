@@ -1,4 +1,5 @@
 <script setup>
+import reward from './reward.vue'
 // import { ref, computed, nextTick, onMounted } from 'vue'
 const roll = ref(null)
 const prize_list = ref([
@@ -258,6 +259,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <reward />
   <div class="btn" @click="bind_theme">切换主题</div>
   <div class="video-box relative">
     <video @click="bind_play" controls ref="player" src="./1.mp4" type="video/mp4">
