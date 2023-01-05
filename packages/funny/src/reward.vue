@@ -37,12 +37,12 @@ const rotateDir = [
 // { index: 7, next: 0 }
 ]
 
-const animation_index = ref(0)
+const animation_index = ref(1)
 const reward_id = ref(null)
 // 初始化抽奖, 3代表圈数， 8代表速度，也代表时间片的个数
 const luckDrawFn = new LuckDraw(prizeList, rotateDir, 4, 9)
 // 中奖id，请求服务端接口拿到
-const id = 3
+const id = ref(3)
 const delay = n => {
   return new Promise(resolve => {
     setTimeout(resolve, n * 1000)
@@ -51,11 +51,14 @@ const delay = n => {
 const clickPlanButton = () => {
   return {id:2}
 }
+setTimeout(() => {
+  id.value = 4
+},9000)
 const bind_lottery = () => {
   // if(playing.value) return
   // playing.value = true
   luckDrawFn.run(
-    id, //中奖id
+    id.value, //中奖id
     animation_index.value,
     params => { // 停留在当前格子的回调函数
       // 拿到当前 active 状态的 id

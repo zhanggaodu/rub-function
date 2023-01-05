@@ -13,8 +13,19 @@ export default class LuckDraw {
         return
       }
       this.DataArr[index].next = this.DataArr[next]
+      console.log(this.DataArr[index])
     }
     console.log('prizeList add next',this.DataArr)
+    // DataArr.next嵌套太多 原因？？？
+    // var j = 0
+    // while (this.DataArr[0].next) {
+    //   if(this.DataArr[0].next !== undefined) { 
+    //     j++
+    //   } else {
+    //     break
+    //   }
+    //   console.log(j)
+    // }
   }
 
   run(id, startIndex, running, runend) {
