@@ -6,28 +6,16 @@ export default class LuckDraw {
     this.myReq // 最小速度
     this.defaultSpeed = minSpeed || 15
 
-    for (var i = 0; i < RotateDir.length; i++) {
+    for (var i = 0; i < DataArr.length; i++) {
       let { index, next } = RotateDir[i]
       if (typeof this.DataArr[index].next !== "undefined") {
         console.error(`RotateDir is error`)
         return
       }
       this.DataArr[index].next = this.DataArr[next]
-      console.log(this.DataArr[index])
     }
-    console.log('prizeList add next',this.DataArr)
-    // DataArr.next嵌套太多 原因？？？
-    // var j = 0
-    // while (this.DataArr[0].next) {
-    //   if(this.DataArr[0].next !== undefined) { 
-    //     j++
-    //   } else {
-    //     break
-    //   }
-    //   console.log(j)
-    // }
   }
-
+    // TODO 为什么会塞这么多?
   run(id, startIndex, running, runend) {
     var counter = startIndex // 计数器
     var current = 0 // 当前数字值
@@ -49,14 +37,15 @@ export default class LuckDraw {
     }
     // tem.id = 抽奖id  
     var allCount = this.cycleNumber * this.DataArr.length + n
-    // 走过的所有index = 圈数 * 奖品列表的长度 + 抽中的奖品index 3*7
-    var addSpeed = this.defaultSpeed - this.maxSpeed // 加速区间 8-4=4
-    var reduceSpeed = allCount - (this.defaultSpeed - this.maxSpeed) // 减速区间 21+2-(8-4)
+    // 走过的所有index = 圈数 * 奖品列表的长度 + 抽中的奖品id   30
+    var addSpeed = this.defaultSpeed - this.maxSpeed // 加速区间 4
+    var reduceSpeed = allCount - (this.defaultSpeed - this.maxSpeed) + 2// 减速区间 26
     this.running = running
     this.runend = runend
     var _this = this
     this.running(currentObj)
     this.myReq = requestAnimationFrame(step)
+    // TODO 速度降得标准
     function step() { // 这里在循环返回index
       // 加速环节
       if (counter < addSpeed) {

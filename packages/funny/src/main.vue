@@ -244,7 +244,7 @@ onMounted(() => {
   })
   // 第一帧加载完毕
   player.value.addEventListener('loadeddata', e => {
-    console.log('加载完成 可以给duration赋值')
+    // console.log('加载完成 可以给duration赋值')
     duration.value = player.value.duration
     currentTime.value = player.value.currentTime
   })
