@@ -41,7 +41,7 @@ const rotateDir = [
 const animation_index = ref(0)
 const reward_id = ref(null)
 // 初始化抽奖, 3代表圈数， 8代表速度，也代表时间片的个数
-const luckDrawFn = new LuckDraw(prizeList, rotateDir, 3, 9)
+const luckDrawFn = new LuckDraw(prizeList, rotateDir, 4, 10)
 // 中奖id，请求服务端接口拿到
 const id = 3
 const delay = n => {

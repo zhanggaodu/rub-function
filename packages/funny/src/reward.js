@@ -1,7 +1,7 @@
 export default class LuckDraw {
   constructor(DataArr, RotateDir, cycleNumber, minSpeed) {
     this.DataArr = JSON.parse(JSON.stringify(DataArr))
-    this.maxSpeed = 5 // 最大速度
+    this.maxSpeed = 6 // 最大速度
     this.cycleNumber = cycleNumber || 2 // 全速
     this.myReq // 最小速度
     this.defaultSpeed = minSpeed || 15
@@ -39,7 +39,7 @@ export default class LuckDraw {
     var allCount = this.cycleNumber * this.DataArr.length + n
     // 走过的所有index = 圈数 * 奖品列表的长度 + 抽中的奖品id   30
     var addSpeed = this.defaultSpeed - this.maxSpeed // 加速区间 4
-    var reduceSpeed = allCount - (this.defaultSpeed - this.maxSpeed) + 2// 减速区间 26
+    var reduceSpeed = allCount - (this.defaultSpeed - this.maxSpeed)// 减速区间 26
     this.running = running
     this.runend = runend
     var _this = this
