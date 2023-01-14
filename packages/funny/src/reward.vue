@@ -105,7 +105,7 @@ const bind_lottery = () => {
 
 <template>
   <div class="content relative">
-    <!-- <Light /> -->
+    <Light />
     <div class="box flex flex-wrap justify-center">
       <template v-for="item in prizeList">
         <div class="box-item" :class="{'box-active':animation_index === item.id}">
