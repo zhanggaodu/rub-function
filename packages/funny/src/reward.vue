@@ -1,18 +1,8 @@
 <script setup>
 import LuckDraw from './reward.js'
 import Light from './light.vue';
-// https://cloud.tencent.com/developer/article/1653522
 const scale = window.innerWidth / 375
 const playing = ref(false)
-// const reward_list = [
-//   {name: '23132', key: 1},
-//   {name: '23132', key: 2},
-//   {name: '23132', key: 3},
-//   {name: '23132', key: 4},
-//   {name: '23132', key: 5},
-//   {name: '23132', key: 6},
-//   {name: '23132', key: 7}
-// ]
 
 // 使用方式：服务端返回的奖品信息列表
 const prizeList = [
@@ -43,47 +33,13 @@ const reward_id = ref(null)
 // 初始化抽奖, 3代表圈数， 8代表速度，也代表时间片的个数
 const luckDrawFn = new LuckDraw(prizeList, rotateDir, 4, 10)
 // 中奖id，请求服务端接口拿到
-const id = 3
+const id = 7
 const delay = n => {
   return new Promise(resolve => {
     setTimeout(resolve, n * 1000)
   })
 }
-const clickPlanButton = () => {
-  return {id:2}
-}
-// const bind_lottery = () => {
-//   // if(playing.value) return
-//   // playing.value = true
-//   Promise.all([
-//     delay(2),
-//      luckDrawFn.run(
-//       // id, //中奖id
-//       animation_index.value,
-//       params => { // 停留在当前格子的回调函数
-//         // 拿到当前 active 状态的 id
-//         animation_index.value = params.id
-//       // },
-//       // params => { // 最终停止的回调函数
-//       //   //最后转盘停止的地方，可以弹出奖励弹框或其他操作
-//       //   reward_id.value = params.id
-//       //   console.log('结束时的id',params.id)
-//   })
-//   ]).then(() => {
-//     luckDrawFn.slow(
-//       id, //中奖id
-//       animation_index.value,
-//       params => { // 停留在当前格子的回调函数
-//         // 拿到当前 active 状态的 id
-//         animation_index.value = params.id
-//       },
-//       params => { // 最终停止的回调函数
-//         //最后转盘停止的地方，可以弹出奖励弹框或其他操作
-//         reward_id.value = params.id
-//         console.log('结束时的id',params.id)
-//     })
-//   })
-// }
+
 const bind_lottery = () => {
   if(playing.value) return
   playing.value = true
@@ -97,7 +53,6 @@ const bind_lottery = () => {
     params => { // 最终停止的回调函数
     //最后转盘停止的地方，可以弹出奖励弹框或其他操作
     reward_id.value = params.id
-    console.log('结束时的id',params.id)
     playing.value = false
   })
 }

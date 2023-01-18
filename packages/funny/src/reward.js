@@ -20,7 +20,7 @@ export default class LuckDraw {
     var counter = startIndex // 计数器
     var current = 0 // 当前数字值
     var n = 0
-    var currentObj = this.DataArr[startIndex]
+    var currentObj = this.DataArr[startIndex === (this.DataArr.length) ? 0 : startIndex]
     var tem = this.DataArr[0]
     while (true) {
       if (n > this.DataArr.length) {
@@ -32,8 +32,6 @@ export default class LuckDraw {
       }
       tem = tem.next
       n++ 
-      console.log('tem ----',tem)
-      console.log('n ---',n)
     }
     // tem.id = 抽奖id  
     var allCount = this.cycleNumber * this.DataArr.length + n
@@ -49,7 +47,6 @@ export default class LuckDraw {
     function step() { // 这里在循环返回index
       // 加速环节
       if (counter < addSpeed) {
-        console.log('---加速循环开始----', counter, current, addSpeed, reduceSpeed, allCount)
         if (current < Math.pow(_this.defaultSpeed - counter, 2)) { // 为啥是平方
           current = current + _this.defaultSpeed / 2 // 4
         } else {
@@ -61,7 +58,6 @@ export default class LuckDraw {
       }
       // 匀速环节
       if (counter >= addSpeed && counter < reduceSpeed) {
-        console.log('---匀速循环开始----', counter, current, addSpeed, reduceSpeed, allCount)
         if (current < _this.maxSpeed) {
           current++
         } else {
@@ -73,7 +69,6 @@ export default class LuckDraw {
       }
       // 减速环节
       if (counter >= reduceSpeed && counter < allCount) {
-        console.log('---减速循环开始----', counter, current, addSpeed, reduceSpeed, allCount)
         if (Math.sqrt(current) <= (_this.defaultSpeed - (allCount - counter))) {
           current = current + 2
         } else {
