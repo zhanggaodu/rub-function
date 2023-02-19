@@ -1,5 +1,6 @@
 <script setup>
-import reward from './reward.vue'
+import clipboard from './clipboard.vue'
+// import reward from './reward.vue'
 // import { ref, computed, nextTick, onMounted } from 'vue'
 const roll = ref(null)
 const prize_list = ref([
@@ -259,6 +260,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <clipboard />
   <reward />
   <div class="btn" @click="bind_theme">切换主题</div>
   <div class="video-box relative">
