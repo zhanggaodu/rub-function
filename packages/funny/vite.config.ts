@@ -30,7 +30,8 @@ export default defineConfig({
     // }),
     AutoImport({
       resolvers: [ElementPlusResolver()],
-      imports: ['vue']
+      imports: ['vue'],
+      dts: './auto-imports.d.ts',
     }),
     Components({
       resolvers: [ElementPlusResolver()],
