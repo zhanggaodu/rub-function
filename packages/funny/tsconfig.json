@@ -21,17 +21,15 @@
       "@/*": [
         "./src/*"
       ]
-    },
-    "types": [
-      "unplugin-icons/types/vue",
-    ]
+    }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "components.d.ts", "src/views/dashboard/banner/BannerQRCodePreview.jsx",
+    "components.d.ts",
+    "auto-imports.d.ts"
   ],
   "exclude": [
     "node_modules",
