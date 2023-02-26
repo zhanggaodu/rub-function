@@ -2,38 +2,59 @@
 
 </script>
 <template>
-  <div class="center"></div>
+  <count-down title="点击重试"></count-down>
 
 </template>
 <style lang="scss" scoped >
-.center {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%);
-  z-index: 99;
-  &::after {
-    width: 40px;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '';
-    font-size: 30px;
-    animation-name: count;
-    animation-duration: 3s;
-    transform: scale(1);
-  }
+@property --t { 
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+@counter-style stop {
+  system: cyclic;
+  symbols: "Go~";
+  range: infinite 0;
+}
+html,body{
+  margin: 0;
+  height: 100%;
+  display: grid;
+  place-content: center;
+}
+count-down{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 120px;
+}
+count-down::after{
+  --t: 5;
+  --dur: 1;
+  counter-reset: time var(--t);
+  content: counter(time, stop);
+  animation: count calc( var(--t) * var(--dur) * 1s ) steps(var(--t)) forwards,
+  shark calc(var(--dur) * 1s) calc(var(--dur) * .8s) calc(var(--t));
+}
+count-down:active::after{
+  animation: none;
+  content: '重新开始';
 }
 @keyframes count {
-  30% { content: '3'}
-  32% {transform: scale(.8);}
-  60% {transform: scale(1);content: '2'}
-  62% {transform: scale(.8);}
-  90% {transform: scale(1);content: '1'}
-  92% {transform: scale(.8);}
-  100% {transform: scale(1); content: 'GO!'}
+  to {
+      --t: 0;
+  }
 }
-@keyframes size {
+@keyframes shark {
+  0%{
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  20%{
+    opacity: 0;
+    transform: scale(0.4);
+  }
 }
 </style>
