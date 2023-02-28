@@ -1,60 +1,115 @@
 <script setup>
-
+// https://haml.info/
+// https://pugjs.org/api/getting-started.htmlhttps://pugjs.org/api/getting-started.html
+// https://codepen.io/jimbatamang/pen/Qjyyjq
+// https://codepen.io/elmzarnsi/pen/zpprqo
 </script>
 <template>
-  <count-down title="点击重试"></count-down>
-
+  <div></div>
 </template>
 <style lang="scss" scoped >
-@property --t { 
-  syntax: '<integer>';
-  inherits: false;
-  initial-value: 0;
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700');
+
+$timer_unit: 1s;
+$timer_length: 15;
+$timer_delay: 1s;
+
+$starting_hue: 160;
+$hue_increment: 360 / $timer_length;
+
+@mixin scale_timer($scale) {
+  $x: $scale;
+  width: 50vmin * $x;
+  height: 50vmin * $x;
+  box-shadow: 0 0 0 (1.25vmin * $x), inset (2.5vmin * $x) (2.5vmin * $x) (5vmin * $x) rgba(black, 0.125), (2.5vmin * $x) (2.5vmin * $x) (5vmin * $x) rgba(black, 0.125);
+  font-size: 25vmin * $x;
+  text-shadow: (2.5vmin * $x) (2.5vmin * $x) (5vmin * $x) rgba(black, 0.125);
 }
-@counter-style stop {
-  system: cyclic;
-  symbols: "Go~";
-  range: infinite 0;
+
+html {
+  box-sizing: border-box
 }
-html,body{
-  margin: 0;
-  height: 100%;
-  display: grid;
-  place-content: center;
+
+*, *:before, *:after {
+  box-sizing: inherit
 }
-count-down{
+
+body {
+  height: 100vh;
+  background-color: hsl($starting_hue, 80, 60);
+  font-family: 'Montserrat', sans-serif;
+  animation: ($timer_unit * $timer_length) ($timer_delay - $timer_unit * 0.125) cubic-bezier(0.9, 0, 0.1, 1) forwards background_color;
+
+  @at-root {
+    @keyframes background_color {
+      @for $i from 1 through $timer_length + 1 {
+        #{100% / $timer_length * $i} {
+          $hue: $hue_increment * $i * 2;
+          background-color: hsl($starting_hue + $hue, 80, 60)
+        }
+      }
+    }
+  }
+}
+
+div {
+  // +scale_timer(1.5)
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: Consolas, Monaco, monospace;
-  font-size: 120px;
-}
-count-down::after{
-  --t: 5;
-  --dur: 1;
-  counter-reset: time var(--t);
-  content: counter(time, stop);
-  animation: count calc( var(--t) * var(--dur) * 1s ) steps(var(--t)) forwards,
-  shark calc(var(--dur) * 1s) calc(var(--dur) * .8s) calc(var(--t));
-}
-count-down:active::after{
-  animation: none;
-  content: '重新开始';
-}
-@keyframes count {
-  to {
-      --t: 0;
+  overflow: hidden;
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  @media (min-width: 600px) {
+    // +scale_timer(1);
+  }
+
+  &:before {
+    content: '#{$timer_length}';
+    animation: ($timer_unit * $timer_length) $timer_delay forwards timer_countdown, $timer_unit ($timer_delay - $timer_unit * 0.125) $timer_length timer_beat
+  }
+
+    @at-root {
+      @keyframes timer_beat {
+        40% {}
+        80% {transform: none}
+        50% {transform: scale(1.125)}
+      }
+    }
+
+    @at-root {
+      @keyframes timer_countdown {
+        @for $i from 0 through $timer_length {
+          #{100% / $timer_length * $i} {
+            content: '#{-$i + $timer_length}'
+          }
+        }
+      }
+    }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(black, 0.125);
+    animation: ($timer_unit * $timer_length) $timer_delay linear forwards timer_indicator;
+
+    @at-root {
+      @keyframes timer_indicator {
+        100% { transform: translateY(100%)}
+          
+      }
+    }
   }
 }
-@keyframes shark {
-  0%{
-    opacity: 1;
-    transform: scale(1);
-  }
-  
-  20%{
-    opacity: 0;
-    transform: scale(0.4);
-  }
-}
+
 </style>
