@@ -1,6 +1,7 @@
 <script setup>
 import clipboard from './clipboard.vue'
 import countdown from './countdown.vue'
+import bg from './bg.vue'
 // import reward from './reward.vue'
 // import { ref, computed, nextTick, onMounted } from 'vue'
 const roll = ref(null)
@@ -261,6 +262,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <bg />
   <countdown />
   <clipboard />
   <reward />
