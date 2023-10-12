@@ -1,38 +1,96 @@
-// import { readFile } from 'node:fs/promises'
-// import * as path from 'path'
-// import { fileURLToPath } from 'url'
-// const filePath = new URL('./compress.json', import.meta.url)
-// const __filename = fileURLToPath(import.meta.url)
-// const __dirname = path.dirname(__filename)
-const fs = require('fs')
-const path = require('node:path')
-const tinify = require("tinify")
-tinify.key = "pn6dXsSpSSD4tZ3hN7CNVBXWMdhD8zNs"
+const fileInput = document.querySelector("#upload");
 
-const root = path.resolve(__dirname, '../src')
-const filePath = path.resolve(__dirname, './compress.json')
-//__dirname and __filename global variables are defined in CommonJS modules, but not in ES modules
-try {
-  const contents = fs.readFileSync(filePath, { encoding: 'utf8' })
-  const compressList = JSON.parse(contents)
-  compressList.map(item => {
-    const position = path.resolve(root, `./${ item.position }`)
-    const file_list = item.images_list
-    file_list.map(image => {
-      const position_image = path.resolve(position, `./${ image }`)
-      fs.readFile(`${position_image}`, function(err, sourceData) {
-       tinify.fromBuffer(sourceData).toBuffer(function(err, resultData) {
-          if (err) throw err
-          else {
-            fs.writeFile(`${position_image}`,resultData, 'binary', function(error) {
-              if (error) throw error
-              else console.log('succeed',`${position_image}`)
-            })
-          }
-        })
-      })
-    })
-  })
-} catch (err) {
-  console.error(err.message);
+const originalImage = document.querySelector("#originalImage");
+const compressedImage = document.querySelector("#compressedImage");
+
+const resizingElement = document.querySelector("#resizingRange");
+const qualityElement = document.querySelector("#qualityRange");
+
+const uploadButton = document.querySelector("#uploadButton");
+
+let compressedImageBlob;
+
+let resizingFactor = 0.8;
+let quality = 0.8;
+
+// initializing the compressed image
+compressImage(originalImage, resizingFactor, quality);
+
+fileInput.addEventListener("change", async (e) => {
+  const [file] = fileInput.files;
+  // storing the original image
+  originalImage.src = await fileToDataUri(file);
+
+  // compressing the uplodaded image
+  originalImage.addEventListener("load", () => {
+    compressImage(originalImage, resizingFactor, quality);
+  });
+
+  return false;
+});
+
+
+uploadButton.onclick = () => {
+  if (compressedImageBlob) {
+    const formdata = new FormData();
+    formdata.append("image", compressedImageBlob);
+  }
+}
+
+function compressImage(imgToCompress, resizingFactor, quality) {
+  // showing the compressed image
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+
+  const originalWidth = imgToCompress.width;
+  const originalHeight = imgToCompress.height;
+
+  const canvasWidth = originalWidth * resizingFactor;
+  const canvasHeight = originalHeight * resizingFactor;
+
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+
+  context.drawImage(
+    imgToCompress,
+    0,
+    0,
+    originalWidth * resizingFactor,
+    originalHeight * resizingFactor
+  );
+
+  // reducing the quality of the image
+  canvas.toBlob(
+    (blob) => {
+      if (blob) {
+        compressedImageBlob = blob;
+        compressedImage.src = URL.createObjectURL(compressedImageBlob);
+        document.querySelector("#size").innerHTML = bytesToSize(blob.size);
+      }
+    },
+    "image/jpeg",
+    quality
+  );
+}
+
+function fileToDataUri(field) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      resolve(reader.result);
+    });
+    reader.readAsDataURL(field);
+  });
+}
+
+function bytesToSize(bytes) {
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+
+  if (bytes === 0) {
+    return "0 Byte";
+  }
+
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+
+  return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
