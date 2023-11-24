@@ -1,5 +1,5 @@
 <script setup>
-import LuckDraw from './reward.js'
+import LuckDraw from '@/utils/reward.js'
 import Light from './light.vue';
 const scale = window.innerWidth / 375
 const playing = ref(false)
@@ -108,4 +108,4 @@ const bind_lottery = () => {
 .btn {
   margin: 0 auto 100px;
 }
-</style>
+</style>./utils/reward.js/index.js

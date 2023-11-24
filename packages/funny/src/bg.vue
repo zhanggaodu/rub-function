@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <img class="bg" src="./bg.png" srcset="medium.jpg 500w, large.jpg 800w" alt="">
-    <ol>
+    <!-- <ol>
       <li>333</li>
       <li>333</li>
       <li>333</li>
@@ -9,7 +9,7 @@
       <li>333</li>
       <li>333</li>
       <li>333</li>
-    </ol>
+    </ol> -->
   </div>
 </template>
 
