@@ -10,9 +10,14 @@ const copyImage = ref<HTMLImageElement>()
  * 禁止write的原因是因为协议不是https还是Permission API
 */
 const copyUseCommand = (text: string) => {
-
+  console.log('command', text)
+  let textarea = document.createElement('textarea')
+  textarea.style.display = 'none'
+  textarea.select()
+  document.execCommand(text)
 }
 const copyUseClipboard = (text: string) => {
+  console.log('navigate', text)
 
 }
 
@@ -32,13 +37,16 @@ type CopyData = {
   blob?: Blob
 }
 const copyData = ref<CopyData>({type: 'string'})
-async function copy(type: string='text', container: HTMLElement | HTMLImageElement) {
+async function copy(container: HTMLElement | HTMLImageElement, type: string='text') {
   // text接受的类型 string htmlElement image(如果是用网址下载图片呢)
   // 处理数据
-  let data = ''
+  let data:string = ''
   if (type === 'image') {
     copyData.value.type = 'image'
     copyData.value.blob = await getBlob(location.origin+container.attributes.src.value)
+  } else {
+    // TODO 如果有子元素怎么办 循环获取str并拼接
+    data = container.innerText
   }
   // data = container.value.nodeValue
   if (isSupport()) {
@@ -75,15 +83,18 @@ onMounted(() => {
 onUnmounted(() => {
   // 这样还能remove嘛
   document.removeEventListener('paste', (event) => handlerPaste(event))
+  // File、Blob、Base64
   // file blob -> src  = createObjectUrl() --> revoke
   // file -> src = fileReader.readAsDataUrl
 })
 </script>
 
 <template>
-  <img ref="copyImage" src="@/assets/images/copy.jpeg" alt="">
-  <div ref="copyText" @click="copy('image', copyImage)">复制文本吧---</div>
-  <div ref="pasteBox" contenteditable="true">粘贴图片</div>
+  <img ref="copyImage" style="visibility: hidden;" src="@/assets/images/copy.jpeg" alt="">
+  <div @click="copy(copyImage, 'image')">复制图片</div>
+  <div ref="copyText">复制这里的文字</div>
+  <div @click="copy(copyText)">复制文本</div>
+  <div ref="pasteBox" contenteditable="true">可以在这里粘贴</div>
 </template>
 
 <style lang="scss" scoped ></style>
