@@ -4,64 +4,97 @@ const copyImage = ref<HTMLImageElement>()
 // navigator.permissions.query({name:'clipboard-read'}).then(res => {console.log(res)})
 /**
  * 思路 
- * 接受两个参数 text 和 container
- * 判断是否支持command  navigate.clipboard(https)
  * 为什么创建textarea
  * 禁止write的原因是因为协议不是https还是Permission API
 */
-const copyUseCommand = (text: string) => {
-  console.log('command', text)
+const copyUseCommand = (data: CopyData) => {
   let textarea = document.createElement('textarea')
-  textarea.style.display = 'none'
+  textarea.value = data.value_text ?? ''
+  textarea.style.position = 'absolute'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
   textarea.select()
-  document.execCommand(text)
-}
-const copyUseClipboard = (text: string) => {
-  console.log('navigate', text)
-
+  document.execCommand(data.value_text)
+  textarea.remove()
 }
 
+const copyUseClipboard = (data: CopyData) => {
+  if (data.type === 'image') {
+    let blob = new Blob({ type: 'text/plain' }, data.value_blob)
+    const v = [new ClipboardItem({ 'Blob': blob })]
+    return new Promise((resolve, reject) => {
+      navigator.clipboard.write(v).then(
+        (res) => {
+          resolve(res)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  } else {
+    return new Promise<void>((resolve, reject) => {
+      navigator.clipboard.writeText(data.value_text).then(
+        (res) => {
+          resolve(res)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
+}
+
+const isPromise = () => { // geo natification 
+  return true
+  // new Promise<void>((resolve, reject) => {
+  //   navigator.permissions.query({name:'clipboard-wirte'}) chrome的clipboard不需要Permission
+  // })
+}
 const isSupport = () => {
-  return navigator && 'clipboard' in navigator
+  return navigator && 'clipboard' in navigator && isPromise()
 }
+
 async function getBlob(src: string) {
   const responsePromise = fetch(src);
-   return new Promise(async (resolve) => {
+  return new Promise(async (resolve) => {
     const blob = await responsePromise.then(res => res.blob())
     resolve(blob)
   })
 }
+
 type CopyData = {
   type: string,
-  text?: string,
-  blob?: Blob
+  value_blob?: Blob,
+  value_text?: string
 }
-const copyData = ref<CopyData>({type: 'string'})
-async function copy(container: HTMLElement | HTMLImageElement, type: string='text') {
+const copyData = ref<CopyData>({ type: 'string' })
+async function copy(container: string | Blob, type: string = 'text') {
   // text接受的类型 string htmlElement image(如果是用网址下载图片呢)
-  // 处理数据
-  let data:string = ''
   if (type === 'image') {
     copyData.value.type = 'image'
-    copyData.value.blob = await getBlob(location.origin+container.attributes.src.value)
+    copyData.value.value_blob = await getBlob(location.origin + container.attributes.src.value)
   } else {
-    // TODO 如果有子元素怎么办 循环获取str并拼接
-    data = container.innerText
+    copyData.value.value_text = container
   }
-  // data = container.value.nodeValue
   if (isSupport()) {
-    copyUseClipboard(data)
+    copyUseClipboard(copyData.value).then(res => {
+      // 成功
+    }).catch(err => {
+      console.log('err', err)
+    })
   } else {
-    copyUseCommand(data)
+    copyUseCommand(copyData.value)
   }
 }
 
 const pasteBox = ref<HTMLDivElement>()
 function handlerPaste(e: any) {
   e.preventDefault()
-  if(copyData.value.type === 'image') {
+  if (copyData.value.type === 'image') {
     let img = document.createElement('img')
-    img.src =  window.URL.createObjectURL(copyData.value.blob)
+    img.src = window.URL.createObjectURL(copyData.value.value_blob)
     pasteBox.value?.appendChild(img)
   }
 }
@@ -71,10 +104,10 @@ onMounted(() => {
   if (node) {
     // 如果node是div需要设置contenteditable="true" 用户需要手动选中
     // node.addEventListener('copy', (e) => {
-      // console.log(e)
-      // e.clipboardData.setData('text/plain', 'Hello, world!')
-      // e.clipboardData.setData('text/html', '<b>Hello, world!</b>')
-      // e.preventDefault()
+    // console.log(e)
+    // e.clipboardData.setData('text/plain', 'Hello, world!')
+    // e.clipboardData.setData('text/html', '<b>Hello, world!</b>')
+    // e.preventDefault()
     // })
   }
   document.addEventListener('paste', (event) => handlerPaste(event))
@@ -91,9 +124,9 @@ onUnmounted(() => {
 
 <template>
   <img ref="copyImage" style="visibility: hidden;" src="@/assets/images/copy.jpeg" alt="">
-  <div @click="copy(copyImage, 'image')">复制图片</div>
+  <div @click="copy(copyData.value_blob, 'image')">复制图片</div>
   <div ref="copyText">复制这里的文字</div>
-  <div @click="copy(copyText)">复制文本</div>
+  <div @click="copy('这是复制的文字')">复制文本</div>
   <div ref="pasteBox" contenteditable="true">可以在这里粘贴</div>
 </template>
 
