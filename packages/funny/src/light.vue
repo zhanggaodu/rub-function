@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const scale = window.innerWidth / 375
 const row_list = [
   {color: 'yellow'},

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const box = ref(null)
 const blur = ref(null)
 const flag = ref(null)

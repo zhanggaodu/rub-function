@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import LuckDraw from '@/utils/reward.js'
 import Light from './light.vue';
 const scale = window.innerWidth / 375

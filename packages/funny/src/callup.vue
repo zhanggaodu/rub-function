@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // 换起app
 import CallApp from 'callapp-lib'
 const options = {

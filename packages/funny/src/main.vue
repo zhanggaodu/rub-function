@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import clipboard from './clipboard.vue'
 import countdown from './countdown.vue'
 import bg from './bg.vue'

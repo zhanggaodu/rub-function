@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // https://haml.info/
 // https://pugjs.org/api/getting-started.htmlhttps://pugjs.org/api/getting-started.html
 // https://codepen.io/jimbatamang/pen/Qjyyjq

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const bg = ref(null)
 const inProgress = ref(false)
 const start = ref(0)

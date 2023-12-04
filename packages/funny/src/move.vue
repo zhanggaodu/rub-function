@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const box = ref(null)
 const text = ref(null)
 var factor = 0.4 //当鼠标移动至显示区域边界时，阴影距离占hero元素宽和高的比例

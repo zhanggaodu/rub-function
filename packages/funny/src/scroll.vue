@@ -1,5 +1,5 @@
-<script setup >
-const scroll_list = ref(null)
+<script setup  lang="ts" >
+const scroll_list = ref<HTMLElement>(null)
 onMounted(() => {
   console.log(scroll_list.value.children)
   const list = Array.from(scroll_list.value.children)

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 
 const isShow = ref(false)
 const changeStatus = () => {
