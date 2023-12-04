@@ -12,10 +12,11 @@
 - funny_compress
 - funny_EventBus
 - 瀑布流
-- 日历
 - 抽奖
-- 唤起
+- 日历
+- funny_call唤起 --
 - 倒计时
+
 - modes_js设计模式
 
 - scripts_节假日获取
