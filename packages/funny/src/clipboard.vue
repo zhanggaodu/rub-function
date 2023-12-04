@@ -49,7 +49,7 @@ const copyUseClipboard = (data: CopyData) => {
 const isPromise = () => { // geo natification 
   return true
   // new Promise<void>((resolve, reject) => {
-  //   navigator.permissions.query({name:'clipboard-wirte'}) chrome的clipboard不需要Permission
+  //   navigator.permissions.query({name:'clipboard-wirte'}) chrome的clipboard-read write不需要Permission
   // })
 }
 const isSupport = () => {
