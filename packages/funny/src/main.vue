@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import clipboard from './clipboard.vue'
-import countdown from './countdown.vue'
-import bg from './bg.vue'
-import blur from './blur.vue'
-// import reward from './reward.vue'
-// import { ref, computed, nextTick, onMounted } from 'vue'
 
 const duration = ref()
 const currentTime = ref()
 const current = ref()
 const time = ref()
 const percent = ref()
-const player = ref(null)
+const player = ref<HTMLVideoElement>(null)
 const play_text = ref('播放')
 const bind_play = () => {
   player.value.paused ? player.value.play() : player.value.pause()
@@ -29,17 +23,6 @@ const bind_control = () => {
   return
 }
 
-// 主题颜色切换
-const body = document.querySelector('body')
-body.setAttribute('data-theme','default')
-
-const bind_theme = () => {
-  if(body.getAttribute('data-theme') === 'default') {
-    body.setAttribute('data-theme','dark')
-  } else {
-    body.setAttribute('data-theme','default')
-  }
-}
 
 onMounted(() => {
   player.value.addEventListener('play', e => {
@@ -65,12 +48,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <blur />
-  <bg />
-  <countdown />
-  <clipboard />
-  <!-- <reward /> -->
-  <div class="btn" @click="bind_theme">切换主题</div>
   <div class="video-box relative">
     <video @click="bind_play" controls ref="player" src="./1.mp4" type="video/mp4">
       <track default
@@ -93,15 +70,6 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <!-- <div>转盘</div>
-  <div ref="roll" class="roll relative">
-    <div class="prize absolute">
-      <template v-for="(item,index) in prize_list" :key="index">
-        <div class="item" :style="` transform: rotate(${30 + (index * 60)}deg);`">{{item.name}}</div>
-      </template>
-    </div>
-  </div> -->
-  <div class="btn" @click="bindRotate">点击</div>
 </template>
 
 <style lang="scss" scoped>
