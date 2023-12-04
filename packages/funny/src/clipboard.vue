@@ -71,7 +71,6 @@ type CopyData = {
 }
 const copyData = ref<CopyData>({ type: 'string' })
 async function copy(container: string | Blob, type: string = 'text') {
-  // text接受的类型 string htmlElement image(如果是用网址下载图片呢)
   if (type === 'image') {
     copyData.value.type = 'image'
     copyData.value.value_blob = await getBlob(location.origin + container.attributes.src.value)
