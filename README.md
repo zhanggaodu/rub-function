@@ -5,11 +5,12 @@
 - funny_shadow
 
 # js
-- funny_clipboard support text blob
-- funny_scroll 滚动带阴影
+- funny_copy 支持text blob
+- funny_blur 滚动带阴影
 - funny_refresh 下拉刷新 上拉加载
 - funny_excel 数据转excel 
-- funny_compress
+- funny_compress 压缩图片
+- funny_debounce 节流防抖
 - funny_EventBus
 - 瀑布流
 - 抽奖
@@ -19,5 +20,5 @@
 
 - modes_js设计模式
 
-- scripts_节假日获取
+- scripts_节假日获取 ----
 
