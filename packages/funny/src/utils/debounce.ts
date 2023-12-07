@@ -50,3 +50,38 @@ export function debounce(time: number = 2000) {
 export function debounceFn<T extends FunctionArgs>(fn: T, ms: number = 2000) {
   return createPromiseWrapper(debounce(ms), fn)
 }
+
+export function throttleFn<T extends FunctionArgs>(fn: T, ms: number = 2000) {
+  return createPromiseWrapper(throttle(ms), fn)
+}
+export function throttle(time: number = 2000) {
+  let lastExec = 0
+  let timer:ReturnType<typeof setTimeout> | undefined
+  let lastValue:any
+  const clear = () => {
+    if (timer) {
+      clearTimeout(timer)
+    }
+  }
+
+  const filter:EventFilter = (_invoke) => {
+    const duration = time
+    const elapsed = Date.now() - lastExec
+    const invoke = () => {
+      return lastValue = _invoke()
+    }
+
+    clear()
+
+    if (duration <= 0) {
+      lastExec = Date.now()
+      return invoke()
+    }
+
+    if(elapsed > duration) {
+      lastExec = Date.now()
+      invoke()
+    }
+    // else if ()
+  }
+}
