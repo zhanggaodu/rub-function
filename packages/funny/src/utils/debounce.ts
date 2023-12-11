@@ -40,7 +40,7 @@ export function debounce(time: number = 2000) {
     return new Promise<void>((resolve, reject) => {
       timer = setTimeout(() => {
         resolve(invoke())
-      },duration)
+      }, duration)
     })
   }
 
@@ -81,7 +81,16 @@ export function throttle(time: number = 2000) {
     if(elapsed > duration) {
       lastExec = Date.now()
       invoke()
+    } else {
+      lastValue = new Promise<void>((resolve, reject) => {
+        timer = setTimeout(() => {
+          lastExec = Date.now()
+          resolve(invoke())
+          clear()
+        }, Math.max(0, duration - elapsed))
+      })
     }
-    // else if ()
+    return lastValue
   }
+  return filter
 }
