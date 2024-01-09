@@ -1,4 +1,3 @@
-<script setup lang="ts">
 /**
  * 责任链模式
  * 一份数据需要经过多个方法顺序处理
@@ -68,13 +67,6 @@ class Need {
   }
 
 }
-let need = new Need()
 
-</script>
 
-<template>
-  121212
-</template>
 
-<style lang="scss" scoped>
-</style>
