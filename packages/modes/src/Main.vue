@@ -45,6 +45,8 @@ const str = ''
   }
     console.log( obj.getName() ) // 输出：'sven'
     var getName2 = obj.getName  undefined
+    call是apply的语法糖，如果需要明确传入参数的次数可以使用call，一般情况下使用apply一次性传入所有的参数。
+    59
  * 
  */
 
