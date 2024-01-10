@@ -33,6 +33,19 @@ const str = ''
  * 2. 要得到一个对象，不是通过实例化类，而是找到一个对象作为原型并克隆它。
  * 3. 对象会记住它的原型。
  * 4. 如果对象无法响应某个请求，它会把这个请求委托给它自己的原型。
+ * 设计模式是对语言不足的补充，如果要使用设计模式，不如去选择一门更好的语言。但语言也是在发展的，比如js就天然的支持了object.create
+ * 通过 Object.create( null )可以创建出没有原型的对象。
+ * js的this总指向一个对象，这个对象是由运行时的环境决定了，严格模式是undefined，当函数作为对象的方法被调用时，this 指向该对象，
+ * 当函数作为普通函数调用时，this指向window
+ * var obj = {
+    myName: 'sven',
+    getName: function() {
+      return this.myName
+    }
+  }
+    console.log( obj.getName() ) // 输出：'sven'
+    var getName2 = obj.getName  undefined
+ * 
  */
 
 
