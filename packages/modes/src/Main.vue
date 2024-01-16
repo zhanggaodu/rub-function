@@ -74,7 +74,36 @@ const str = ''
   cost( 200 ); // 未真正求值
   cost( 300 ); // 未真正求值
   alert ( cost() ); // 求值并输出：600
- * 72
+ * 单例模式Singleton pattern：是确保只有一个实例，并提供全局访问。例如pinia、jQuery等
+ 惰性单例指的是在需要的时候才创建对象实例。
+ Singleton.getInstance = (function(){
+  var instance = null;
+  return function( name ){
+    if ( !instance ){
+      instance = new Singleton( name );
+    }
+    return instance;
+  }
+})();
+单一职责原则
+
+策略模式Strategy Pattern 运行时根据不同的情况选择算法
+var strategies = {
+  "S": function( salary ){
+  return salary * 4;
+  },
+  "A": function( salary ){
+  return salary * 3;
+  }, 
+ }
+ function getSalary = (base, multiple) => {
+  return strategies[multiple](base)
+ }
+ 策略模式利用组合、委托和多态等技术和思想，可以有效地避免多重条件选择语句,
+ 策略模式提供了对开放—封闭原则的完美支持，将算法封装在独立的 strategy 中，使得它们易于切换，易于理解，易于扩展。
+ 使用策略模式会在程序中增加许多策略类或者策略对象，但实际上这比把它们负责的逻辑堆砌在 Context 中要好。
+
+
  */
 
 
