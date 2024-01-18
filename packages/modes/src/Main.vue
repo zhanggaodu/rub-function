@@ -85,7 +85,7 @@ const str = ''
     return instance;
   }
 })();
-单一职责原则
+单一职责原则：有且仅有一个引起变化的原因
 
 策略模式Strategy Pattern 运行时根据不同的情况选择算法
 var strategies = {
@@ -99,10 +99,58 @@ var strategies = {
  function getSalary = (base, multiple) => {
   return strategies[multiple](base)
  }
+ 校验库 vaildator
  策略模式利用组合、委托和多态等技术和思想，可以有效地避免多重条件选择语句,
  策略模式提供了对开放—封闭原则的完美支持，将算法封装在独立的 strategy 中，使得它们易于切换，易于理解，易于扩展。
  使用策略模式会在程序中增加许多策略类或者策略对象，但实际上这比把它们负责的逻辑堆砌在 Context 中要好。
 
+ 代理模式 Proxy
+ 保护代理：过滤掉不必要的请求
+ 虚拟代理：避免过大的开销，最常用的方法，例如图片预加载（先放loading图）
+ 缓存代理：为一些开销大的请求提供暂时的存储
+var myImage = (function(){
+  var imgNode = document.createElement( 'img' );
+  document.body.appendChild( imgNode );
+    return {
+      setSrc: function( src ){
+      imgNode.src = src;
+    }
+  }
+})();
+var proxyImage = (function(){
+  var img = new Image;
+  img.onload = function(){
+    myImage.setSrc( this.src );
+  }
+  return {
+    setSrc: function( src ){
+      myImage.setSrc( 'file:// /C:/Users/svenzeng/Desktop/loading.gif' );
+      img.src = src;
+    }
+  }
+})();
+proxyImage.setSrc( 'http:// imgcache.qq.com/music/photo/k/000GGDys0yA0Nk.jpg' );
+缓存代理
+var proxyMult = (function(){
+  var cache = {};
+  return function(){
+    var args = Array.prototype.join.call( arguments, ',' );
+    if ( args in cache ){
+      return cache[ args ];
+    }
+    return cache[ args ] = mult.apply( this, arguments );
+  }
+})(); 
+
+开放封闭原则 TODO 
+依赖倒置原则 TODO
+
+迭代器模式
+终止foreach的方法return false不生效 break 报错 改变循环的数组 √
+迭代器相对简单，简单到不认为他是一种设计模式，很多语言都内置了迭代去
+
+发布订阅模式 eventbus
+和观察者模式（watch computed）的区别
 
  */
 
