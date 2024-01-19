@@ -149,8 +149,12 @@ var proxyMult = (function(){
 终止foreach的方法return false不生效 break 报错 改变循环的数组 √
 迭代器相对简单，简单到不认为他是一种设计模式，很多语言都内置了迭代去
 
-发布订阅模式 eventbus
-和观察者模式（watch computed）的区别
+发布订阅模式 eventbus 为什么有的书里写发布订阅模式=观察者模式
+和观察者模式（watch computed）的区别 TODO
+发布订阅模式：在全局创建一个event对象，利用这个对象在进行模块间的通信。拥有先发布后订阅的能力，例如存储离线消息，登录后显示。
+
+组合模式 p156
+
 
  */
 
