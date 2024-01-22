@@ -153,9 +153,57 @@ var proxyMult = (function(){
 和观察者模式（watch computed）的区别 TODO
 发布订阅模式：在全局创建一个event对象，利用这个对象在进行模块间的通信。拥有先发布后订阅的能力，例如存储离线消息，登录后显示。
 
-组合模式 p156
+组合模式 没看懂
 
+享元模式
+核心：利用共享技术有效支持大量细粒度的对象。
+要求将对象分为内部属性（被一些对象共享，一般不变）和外部属性（根据不同的情景变化）
+适用性：内存中存在着大量相似的对象
 
+责任链模式
+使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系
+可以手动的确实起始点，如果只需要orderNomal只调用ordernormal就行
+类似于promise.then（）
+class Order {
+  this.constructor(fn) {
+    this.fn = fn
+    this.callback = null
+    this.order_type = oder_type 
+    this.price = price
+  }
+  then:function () {
+    return {this.order_type, this.price}
+  }
+}
+Order.prototype.setNextSuccessor = function( call ){
+ return this.callback = call
+}
+Chain.prototype.passRequest = function(){
+  var ret = this.fn.apply( this, arguments );
+  if ( ret === 'nextSuccessor' ){
+    return this.successor && this.successor.passRequest.apply( this.successor, arguments )
+  }
+  return ret
+}
+cosnst order500 = function (order_type, price){
+  if () {
+
+  } else {
+    return 'nextSuccessor'
+  }
+}
+const order_5 = new Order(order500)
+
+order_5.setNextSuccessor( order200 )
+order_5.passRequest( 1, 500 )
+TODO 判断考勤也能用责任链？
+
+中介者模式
+避免发送方和接收者之间的耦合关系，发送者将消息都发给中介，由中介传递消息
+缺点：对象关系的复杂性会转为中介者对象的复杂性
+
+装饰者模式
+230
  */
 
 
