@@ -203,7 +203,75 @@ TODO 判断考勤也能用责任链？
 缺点：对象关系的复杂性会转为中介者对象的复杂性
 
 装饰者模式
-230
+在不改变函数源代码的情况下，对原功能增加扩展。
+window.onload = function(){
+  alert (1);
+}
+var _onload = window.onload || function(){};
+window.onload = function(){
+  _onload();
+  alert (2);
+}
+为了避免覆盖掉之前的onload方法
+现在js已经支持Decorator装饰器
+
+状态模式
+状态机
+Light.prototype.buttonWasPressed = function(){
+  if ( this.state === 'off' ){
+    console.log( '弱光' )
+    this.state = 'weakLight'
+ } else if ( this.state === 'weakLight' ){
+    console.log( '强光' )
+    this.state = 'strongLight'
+ } else if ( this.state === 'strongLight' ){
+    console.log( '关灯' )
+    this.state = 'off'
+ }
+};
+状态模式和策略模式的区别
+状态对应的行为已经封装好了，而策略模式中的行为是可以随时更换
+var delegate = function( client, delegation ){ 闭包面向对象
+ return {
+  buttonWasPressed: function(){  // 此处用闭包的好处
+    return delegation.buttonWasPressed.apply( client, arguments )
+  }
+ }
+}
+var FSM = {
+  off: {
+  buttonWasPressed: function(){
+    console.log( '关灯' )
+    this.currState = this.onState
+  }
+ },
+ on: {
+  buttonWasPressed: function(){
+    console.log( '开灯' )
+    this.currState = this.offState
+  }
+ }
+}
+var Light = function(){
+  this.offState = delegate( this, FSM.off );
+  this.onState = delegate( this, FSM.on );
+  this.currState = this.offState; // 设置初始状态为关闭状态
+}
+Light.prototype.init = function(){
+ self.currState.buttonWasPressed()
+}
+var light = new Light()
+light.init() // 开灯
+
+适配器模式
+
+设计原则
+单一职责原则 一个方法只做一件事
+里氏替换原则
+依赖倒置原则
+接口隔离原则
+合成复用原则
+最少知识原则 一个软件实体应该尽可能的少与其他实体发生相互作用
  */
 
 
