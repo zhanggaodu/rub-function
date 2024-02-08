@@ -19,7 +19,7 @@
 - funny_console
 - 瀑布流
 - 抽奖 离线抽奖，支持自定义添加奖品
-- funny_call唤起 --
+- funny_call唤起 
 - 倒计时
 - ui框架支持响应式布局
 
